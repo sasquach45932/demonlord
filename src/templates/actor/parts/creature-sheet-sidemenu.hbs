@@ -9,19 +9,21 @@
     <div class="injured-overlay"></div>
     {{/if}}
 
-    <div class="sidebar-button frightening">
-      <label>
-        <input type="checkbox" name="system.frightening" id="system.frightening" {{checked (and system.frightening (gte ownership 2))}} />
-      </label>
-      <div class="sidebar-button-text">{{localize "DL.CreatureFrightening"}}</div>
-    </div>
+    {{#unless iseBaneModeRevised}}
+      <div class="sidebar-button frightening">
+        <label>
+          <input type="checkbox" name="system.frightening" id="system.frightening" {{checked (and system.frightening (gte ownership 2))}} />
+        </label>
+        <div class="sidebar-button-text">{{localize "DL.CreatureFrightening"}}</div>
+      </div>
 
-    <div class="sidebar-button horrifying">
-      <label>
-        <input type="checkbox" name="system.horrifying" id="system.horrifying" {{checked (and system.horrifying (gte ownership 2))}}>
-      </label>
-      <div class="sidebar-button-text">{{localize "DL.CreatureHorrifying"}}</div>
-    </div>
+      <div class="sidebar-button horrifying">
+        <label>
+          <input type="checkbox" name="system.horrifying" id="system.horrifying" {{checked (and system.horrifying (gte ownership 2))}}>
+        </label>
+        <div class="sidebar-button-text">{{localize "DL.CreatureHorrifying"}}</div>
+      </div>
+    {{/unless}}
 
     <div class="char-stats">
 

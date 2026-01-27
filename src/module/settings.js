@@ -109,7 +109,7 @@ export class OptionalRulesSettings extends HandlebarsApplicationMixin(Applicatio
       submitOnChange: false,
     },
     position: {
-      width: 800,
+      width: 900,
       height: 'auto',
     },
     tag: 'form',
@@ -159,6 +159,11 @@ export class OptionalRulesSettings extends HandlebarsApplicationMixin(Applicatio
         n: game.i18n.localize('DL.SettingOptionalRuleSurroundingModeNPCCreature'),
         c: game.i18n.localize('DL.SettingOptionalRuleSurroundingModeCreatureOnly'),
       },
+      selectedBaneModeDropDown: game.settings.get('demonlord', 'optionalRuleBaneMode'),
+      BaneModeDropDown: {
+        s: game.i18n.localize('DL.SettingOptionalRuleBaneModeStandard'),
+        r: game.i18n.localize('DL.SettingOptionalRuleBaneModeRevised'),
+      },
       selectedAllowedDispositionDropDown: game.settings.get('demonlord', 'optionalRuleSurroundingDispositions'),
       AllowedDispositionDropDown: {
         d: game.i18n.localize('DL.None'),
@@ -202,6 +207,7 @@ export class OptionalRulesSettings extends HandlebarsApplicationMixin(Applicatio
           'optionalRuleInitiativeMode',
           'optionalRuleRollInitEachRound',
           'optionalRuleExceedsByFive',
+          'optionalRuleBaneMode',
           'horrifyingBane',
           'optionalRuleLevelDependentBane',
           'optionalRuleRevealHorrifyingBane',
@@ -599,6 +605,19 @@ export const registerSettings = function () {
       b: game.i18n.localize('DL.SettingOptionalRuleSurroundingDispositionsAllowBoth'),
       n: game.i18n.localize('DL.SettingOptionalRuleSurroundingDispositionsAllowNeutral'),
       s: game.i18n.localize('DL.SettingOptionalRuleSurroundingDispositionsAllowSecret'),
+    },
+    requiresReload: true,
+  })
+
+  game.settings.register('demonlord', 'optionalRuleBaneMode', {
+    name: game.i18n.localize('DL.SettingOptionalRuleBaneMode'),
+    scope: 'world',
+    type: String,
+    config: false,
+    default: 's',
+    choices: {
+      s: game.i18n.localize('DL.SettingOptionalRuleBaneModeStandard'),
+      r: game.i18n.localize('DL.SettingOptionalRuleBaneModeRevised'),
     },
     requiresReload: true,
   })

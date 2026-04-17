@@ -244,7 +244,7 @@ calculateEncounterDifficulty(combatants) {
       const combatant = combatants.get(combId)
       if (!combatant) return
 
-      if (!game.modules.get('lancer-initiative')) {
+      if (this.initiativeMethod === 's' && !game.modules.get('lancer-initiative').active) {
         const multipleCombatants = game.combat.getCombatantsByToken(combatant.token)
 
         if (combatant.actor?.system.fastAndSlowTurn && multipleCombatants.length == 2) {
@@ -252,20 +252,20 @@ calculateEncounterDifficulty(combatants) {
           init = combatant._id === multipleCombatants[0]._id
             ? game.i18n.localize('DL.TurnSlow')
             : game.i18n.localize('DL.TurnFast')
+
           // Display only
-          if (this.initiativeMethod === 's') el.getElementsByClassName('token-initiative')[0].innerHTML = `<span class="combatant-control dlturnorder">${init}</span>`
+          el.getElementsByClassName('token-initiative')[0].innerHTML = `<span class="combatant-control dlturnorder">${init}</span>`
         } else {
           init = combatant.actor?.system.fastturn
             ? game.i18n.localize('DL.TurnFast')
             : game.i18n.localize('DL.TurnSlow')
 
           // Change initiative by clicking on the name
-          if (this.initiativeMethod === 's') el.getElementsByClassName('token-initiative')[0].innerHTML =
-            `<a class="combatant-control dlturnorder" title="${i18n('DL.TurnChangeTurn')}">${init}</a>`
+          el.getElementsByClassName('token-initiative')[0].innerHTML = `<a class="combatant-control dlturnorder" title="${i18n('DL.TurnChangeTurn')}">${init}</a>`
         }
       }
 
-      if (this.initiativeMethod === 'h' && game.user.isGM)
+      if (this.initiativeMethod === 'h' && game.user.isGM && !game.modules.get('lancer-initiative').active)
       {
         let groupID = combatant.flags?.demonlord?.group
         switch (groupID) {

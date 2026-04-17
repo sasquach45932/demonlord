@@ -548,6 +548,21 @@ Hooks.on('renderCompendiumDirectory', async (app, html, _data) => {
   footer.append(button)
 })
 
+// Combat hooks
+Hooks.on('combatTurnChange', async (combat, prior, _current) => {
+  if (game.user.isGM && prior.combatantId) {
+    const combatant = combat.combatants.get(prior.combatantId)
+    combatant.setFlag('demonlord', 'hasActed', true)
+  }
+})
+
+Hooks.on('combatRound', async (combat) => {
+  // Reset hasActed flag for all combatants at the start of each round
+  for (let combatant of combat.combatants) {
+    await combatant.setFlag('demonlord', 'hasActed', false)
+  }
+})
+
 Hooks.once('diceSoNiceReady', dice3d => {
   dice3d.addSystem({id: 'demonlord', name: 'Demonlord'}, true)
   dice3d.addDicePreset({
